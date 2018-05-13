@@ -77,6 +77,29 @@
             </div>
         </div>
     </div>
+
+
+    <!--edit content-->
+    <div id="edit-content" class="modal ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">edit content </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="qr-code-content" type="text" class="form-control "></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="updateContent()">Save </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary ">
         <div class="container">
             <a href="index.html" class="navbar-brand">QR-Code</a>
@@ -117,7 +140,8 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="ml-3 btn btn-outline-info">edit content</button>
+                        <button type="button" class="ml-3 btn btn-outline-info" onclick="        $('#edit-content').modal('show');
+">edit content</button>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="ml-3 btn btn-outline-light" onclick="$('#uploadImgModal').modal('show');">upload logo</button>
@@ -145,6 +169,12 @@
 
 <script>
     var $qr_code_img;
+    function updateContent() {
+        qr_code_content = $("#qr-code-content").val();
+        console.log(qr_code_content);
+        $("#edit-content").modal("hide");
+        reload();
+    }
 
     function reload() {
         var kaelBase = new KaelQrcode();
@@ -179,7 +209,6 @@
     }
 
     $(function () {
-
         // fileinput
         $("#fileInputBtn").fileinput({
             theme: "explorer-fas",
