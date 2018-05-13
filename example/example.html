@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>a demo for kael-qrcode</title>
+	<style>
+		*{margin: 0;padding: 0}
+		body{background: #eee;}
+		.ctn{width: 960px;margin: 0 auto;}
+		.ctn .qr-ctn{margin: 10px;float:left;}
+	</style>
+</head>
+<body>
+	<div class="ctn">
+		<div class="qr-ctn" id="qr-base"></div>
+		<div class="qr-ctn" id="qr-iron"></div>
+		<div class="qr-ctn" id="qr-sea"></div>
+		<div class="qr-ctn" id="qr-round"></div>
+	</div>
+	
+	<script src="../build/kaelQrcode.min.js"></script>
+
+	<script>
+	window.onload = function(){
+		var kaelBase = new KaelQrcode();
+		kaelBase.init(document.getElementById("qr-base"), {
+			text : "hello KaelQrcode",
+			size: 300,
+			img: {
+				src : "http://p7vng16qv.bkt.clouddn.com/400d6c01-394d-4a2e-a16f-8327003c084e"
+			}
+		});
+
+		var kaelSea = new KaelQrcode();
+		kaelSea.init(document.getElementById("qr-sea"), {
+			text : "hello KaelQrcode",
+			size: 300,
+			color: {
+				'0': 'rgb(1, 158, 213)',
+				'0.2': 'rgb(30, 169, 224)',
+				'0.6': 'rgb(0, 120, 191)',
+				'1': 'rgb(1, 119, 255)'
+			},
+			background: "#d3e3f0",
+			type: "round"
+		});
+
+		var kaelIron = new KaelQrcode();
+		kaelIron.init(document.getElementById("qr-iron"), {
+			text : "hello KaelQrcode",
+			size: 300,
+			color: {
+				'0': 'rgb(30, 30, 30)',
+				'0.2': 'rgb(100, 100, 100)',
+				'1': 'rgb(40, 40, 40)'
+			},
+			background: {
+				'0': 'rgb(233, 233, 233)',
+				'0.2': 'rgb(246, 246, 246)',
+				'1': 'rgb(212, 212, 212)'
+			},
+			shadow: true
+		})
+		console.log(kaelIron.config);
+
+		var kaelRound = new KaelQrcode();
+		kaelRound.init(document.getElementById("qr-round"), {
+			text : "hello KaelQrcode",
+			size: 300,
+			color: "#50528f",
+			background: "e7e0cf",
+			pointColor: "#ee256c",
+			type: "round"
+		});
+	}
+	
+	</script>
+</body>
+</html>
