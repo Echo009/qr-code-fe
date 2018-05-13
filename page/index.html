@@ -93,7 +93,7 @@
                     <textarea id="qr-code-content" type="text" class="form-control "></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="updateContent()">Save </button>
+                    <button type="button" class="btn btn-success" onclick="updateContent()">Save</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                     <li class="nav-item dropdown ">
 
                         <div class="nav-link dropdown-toggle btn btn-primary" data-toggle="dropdown">
-                            Size :
+                            <span class="text-success">Size :</span>
                             <span id="qr-code-size" class="pl-3" data-qr-code-size="400">400</span>
                             <span class="caret"></span>
                         </div>
@@ -139,12 +139,39 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <button type="button" class="ml-3 btn btn-outline-info" onclick="        $('#edit-content').modal('show');
-">edit content</button>
+                    <li class="nav-item dropdown ">
+
+                        <div class="nav-link dropdown-toggle btn btn-primary" data-toggle="dropdown">
+                            <span class="text-warning">Style :</span>
+                            <span id="qr-code-style" class="pl-3" data-qr-code-style="3">style - 3</span>
+                            <span class="caret"></span>
+                        </div>
+                        <div class="dropdown-menu ">
+                            <!--fixed width -->
+                            <div class="qr-code-style-option dropdown-item" data-qr-code-style="1">
+                                style - 1
+                            </div>
+                            <div class="qr-code-style-option dropdown-item" data-qr-code-style="2">
+                                style - 2
+                            </div>
+                            <div class="qr-code-style-option dropdown-item" data-qr-code-style="3">
+                                style - 3
+                            </div>
+                            <div class="qr-code-style-option dropdown-item" data-qr-code-style="4">
+                                style - 4
+                            </div>
+
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="ml-3 btn btn-outline-light" onclick="$('#uploadImgModal').modal('show');">upload logo</button>
+                        <button type="button" class="ml-3 btn btn-outline-info" onclick="        $('#edit-content').modal('show');
+">edit content
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="ml-3 btn btn-outline-light"
+                                onclick="$('#uploadImgModal').modal('show');">upload logo
+                        </button>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="ml-3 btn btn-success" onclick="download()">download</button>
@@ -169,6 +196,7 @@
 
 <script>
     var $qr_code_img;
+
     function updateContent() {
         qr_code_content = $("#qr-code-content").val();
         console.log(qr_code_content);
@@ -184,11 +212,10 @@
         // set content
         current_style.text = utf16to8(qr_code_content);
 
-        if (logo_img_url!="")
-        {
+        if (logo_img_url != "") {
             console.log(logo_img_url);
             current_style.img = {
-                src:logo_img_url
+                src: logo_img_url
             }
         }
 
@@ -244,6 +271,29 @@
             var size = $this.attr("data-qr-code-size");
             qr_code_width = size;
             $("#qr-code-size").text(size);
+            reload();
+        });
+
+        $(document).on("click", ".qr-code-style-option", function () {
+            var $this = $(this);
+            var style = $this.attr("data-qr-code-style") - 0;
+
+            $("#qr-code-style").text($this.text());
+
+            switch (style) {
+                case 1:
+                    current_style = style_1;
+                    break;
+                case 2:
+                    current_style = style_2;
+                    break;
+                case 3:
+                    current_style = style_3;
+                    break;
+                default:
+                    current_style = style_4;
+                    break;
+            }
             reload();
         });
 
