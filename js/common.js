@@ -30,9 +30,9 @@ var qr_code_content = "对不起，打扰了！ ";
 var style_1 = {
     text: utf16to8(qr_code_content),
     size: qr_code_width,
-    img: {
-        src: logo_img_url
-    }
+    // img: {
+    //     src: logo_img_url
+    // }
 };
 var style_2 = {
     text : utf16to8(qr_code_content),

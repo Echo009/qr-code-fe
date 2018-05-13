@@ -57,6 +57,26 @@
 </head>
 <body>
 <div class="container">
+    <!--upload-img-modal-->
+    <div class="modal fade" id="uploadImgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">上传图片</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="file-loading">
+                        <input id="fileInputBtn" name="image-file" multiple type="file">
+                    </div>
+                    <div id="kartik-file-errors">上传失败，请重试！</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary ">
         <div class="container">
             <a href="index.html" class="navbar-brand">QR-Code</a>
@@ -100,7 +120,7 @@
                         <button type="button" class="ml-3 btn btn-outline-info">edit content</button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="ml-3 btn btn-outline-light">upload logo</button>
+                        <button type="button" class="ml-3 btn btn-outline-light" onclick="$('#uploadImgModal').modal('show');">upload logo</button>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="ml-3 btn btn-success" onclick="download()">download</button>
@@ -124,7 +144,8 @@
 </body>
 
 <script>
-    var $qr_code_img ;
+    var $qr_code_img;
+
     function reload() {
         var kaelBase = new KaelQrcode();
         $qr_code_img.html("");
@@ -132,6 +153,14 @@
         current_style.size = qr_code_width;
         // set content
         current_style.text = utf16to8(qr_code_content);
+
+        if (logo_img_url!="")
+        {
+            console.log(logo_img_url);
+            current_style.img = {
+                src:logo_img_url
+            }
+        }
 
         kaelBase.init($qr_code_img[0], current_style);
         console.log(current_style)
@@ -150,6 +179,31 @@
     }
 
     $(function () {
+
+        // fileinput
+        $("#fileInputBtn").fileinput({
+            theme: "explorer-fas",
+            language: "zh",
+            resizeImage: true,
+            maxImageWidth: 300,
+            maxImageHeight: 300,
+            resizePreference: 'width',
+            resizeIfSizeMoreThan: 512,
+            showPreview: true,
+            showUpload: true,
+            uploadUrl: "http://echo0.cn:899/book-store/image/upload",
+            elErrorContainer: '#kartik-file-errors',
+            allowedFileExtensions: ["jpg", "png", "gif"],
+            maxFileCount: 1
+        });
+        $('#fileInputBtn').on('fileuploaded', function (event, data, previewId, index) {
+            response = data.response;
+            logo_img_url = response.data;
+            $("#uploadImgModal").modal('hide');
+            console.log(response.data);
+
+            reload();
+        });
 
         $qr_code_img = $("#qr-code-img");
 
